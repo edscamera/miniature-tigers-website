@@ -23,6 +23,11 @@ iframe {
   border: 0;
 }
 
+h1.header {
+  text-align: center;
+  padding-bottom: 1em;
+}
+
 .center {
   display: flex;
   flex-direction: column;
@@ -38,7 +43,7 @@ iframe {
 
 .landing {
   width: 100%;
-  min-height: 100vh;
+  height: 100vh;
 
   display: flex;
   gap: 1rem;
@@ -46,28 +51,38 @@ iframe {
   align-items: center;
 
   .landing-title {
-    flex-grow: 1;
     font-size: 3rem;
     text-align: center;
+    flex-grow: 1;
+    padding: 1em;
     h1 {
       display: flex;
       flex-wrap: wrap;
+      gap: 16px;
+      justify-content: center;
+      row-gap: 0;
       div {
-        transition: 100ms ease-in-out;
-        animation: forwards appear 1s;
+        white-space: nowrap;
+        display: flex;
+        justify-content: center;
+        div {
+          transition: 100ms ease-in-out;
+          animation: forwards appear 1s;
+        }
       }
     }
   }
-  .landing-img {
+  .landing-album {
+    align-self: stretch;
+    display: flex;
+    justify-content: right;
     aspect-ratio: 1;
-    height: 100%;
-  }
-  .landing-img > img {
-    width: 100%;
-    height: 100%;
-    max-height: calc(100vh - 2em);
-    filter: drop-shadow(0 0 0.1rem black);
-    border-radius: 0.75rem;
+    > * { height: unset !important; }
+    img { object-fit: contain; }
+    .flip-card-front {
+      background-color: #D93C3C;
+      border-radius: 0.75rem;
+    }
   }
 }
 
@@ -85,26 +100,27 @@ iframe {
 
 .albums {
   display: flex;
+  > * {
+    padding: 1em;
+    &:first-child {
+      flex: 2;
+    }
+    &:last-child {
+      flex: 1;
+    }
+  }
+}
+.album-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
   gap: 1rem;
-  > .grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    padding: 1rem;
-    gap: 1rem;
-  }
-  > *:first-child {
-    flex: 2;
-  }
-  > *:last-child {
-    flex: 1;
-  }
 }
 
 .flip-card {
   background-color: transparent;
   perspective: 1000px;
   aspect-ratio: 1;
-  width: auto;
+  height: 100%;
   .flip-card-inner {
     position: relative;
     width: 100%;
@@ -194,12 +210,23 @@ iframe {
     border-radius: 0.75rem;
     filter: drop-shadow(0 0 0.1rem black);
     cursor: pointer;
-    min-width: 480px;
     max-width: 100%;
-    img {
+    flex: 1;
+    flex-basis: 30%;
+    min-width: 480px;
+    .content {
+      width: 100%;
       aspect-ratio: 16/9;
-      object-fit: cover;
       transition: 100ms ease-in-out;
+      position: relative;
+      * {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
     }
     &:hover img {
       filter: brightness(1.5);
@@ -254,29 +281,27 @@ iframe {
   }
 }
 
-@media only screen and (hover: none) and (pointer: coarse) {
+@media (max-width: 860px) {
+  .landing-title {
+    font-size: 1rem !important;
+  }
   .landing {
     flex-direction: column;
   }
   .footer {
     flex-direction: column;
     gap: 3rem;
-    > * { margin: 0; }
+    > * {
+      margin: 0;
+    }
   }
   .albums {
     flex-direction: column;
   }
+  .album-grid {
+    grid-template-columns: 1fr;
+  }
   .video {
-    min-width: unset !important;
-  }
-  .landing-title {
-    font-size: 1.25rem !important;
-  }
-  .landing-img {
-    height: unset !important;
-    width: auto;
-  }
-  .albums > .grid {
-    grid-template-columns: auto;
+    width: 100%;
   }
 }

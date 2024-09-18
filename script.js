@@ -15,6 +15,7 @@ $$(".video").forEach(video => {
         iframe.setAttribute("allowfullscreen", "");
         iframe.setAttribute("allow", "autoplay");
         iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1`;
-        thumbnail.replaceWith(iframe)
+        thumbnail.parentElement.appendChild(iframe);
+        thumbnail.remove();
     });
 });
